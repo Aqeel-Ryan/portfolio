@@ -1,27 +1,22 @@
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Skills from './components/Skills'
-import Experience from './components/Experience'
-import Projects from './components/Projects'
-import Education from './components/Education'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import { Routes, Route } from 'react-router-dom'
+import RootLayout from './routes/RootLayout'
+import HomePage from './routes/HomePage'
+import CaseStudyPage from './routes/CaseStudyPage'
+import BlogList from './routes/BlogList'
+import BlogPost from './routes/BlogPost'
+import NotFound from './routes/NotFound'
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main style={{ paddingTop: '60px' }}>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route element={<RootLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects/:slug" element={<CaseStudyPage />} />
+        <Route path="/work/:slug" element={<CaseStudyPage />} />
+        <Route path="/blog" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   )
 }

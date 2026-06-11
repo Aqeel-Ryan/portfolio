@@ -1,25 +1,17 @@
+import { Link } from 'react-router-dom'
+import { profile } from '../data/profile'
+
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: '#0d0d0d', borderTop: '1px solid #1e1e1e',
-      padding: '2rem 1rem', textAlign: 'center' }}>
-      <div className="max-w-6xl mx-auto" style={{ display: 'flex', flexWrap: 'wrap',
-        justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-        <p style={{ color: '#555', fontSize: '0.85rem' }}>
-          © 2026 Aqeel Ryan
-        </p>
-        <div style={{ display: 'flex', gap: '1.5rem' }}>
-          <a href="https://github.com/Aqeel-Ryan" target="_blank" rel="noreferrer"
-            style={{ color: '#555', fontSize: '0.85rem', transition: 'color 0.2s' }}
-            onMouseOver={e => e.currentTarget.style.color = 'var(--accent)'}
-            onMouseOut={e => e.currentTarget.style.color = '#555'}>
-            GitHub
-          </a>
-          <a href="https://linkedin.com/in/aqryn" target="_blank" rel="noreferrer"
-            style={{ color: '#555', fontSize: '0.85rem', transition: 'color 0.2s' }}
-            onMouseOver={e => e.currentTarget.style.color = 'var(--accent)'}
-            onMouseOut={e => e.currentTarget.style.color = '#555'}>
-            LinkedIn
-          </a>
+    <footer className="bg-elevated border-t border-surface px-6 py-8 text-center">
+      <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+        <p className="text-[#555] text-sm">© 2026 {profile.name}</p>
+        <div className="flex gap-6">
+          <Link to="/blog" className="text-[#555] text-sm hover:text-accent transition-colors">Blog</Link>
+          <a href={profile.github} target="_blank" rel="noreferrer"
+            className="text-[#555] text-sm hover:text-accent transition-colors">GitHub</a>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer"
+            className="text-[#555] text-sm hover:text-accent transition-colors">LinkedIn</a>
         </div>
       </div>
     </footer>

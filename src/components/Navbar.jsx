@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { profile } from '../data/profile'
 
-const links = [
+const sections = [
   { label: 'About', id: 'about' },
   { label: 'Skills', id: 'skills' },
   { label: 'Experience', id: 'experience' },
@@ -12,68 +14,83 @@ const links = [
 export default function Navbar() {
   const [active, setActive] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const onHome = pathname === '/'
 
+  // Active-section highlighting only runs on the home page.
   useEffect(() => {
+    if (!onHome) return
     const observers = []
-    links.forEach(({ id }) => {
+    sections.forEach(({ id }) => {
       const el = document.getElementById(id)
       if (!el) return
       const obs = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActive(id) },
-        { rootMargin: '-40% 0px -50% 0px' }
+        { rootMargin: '-40% 0px -50% 0px' },
       )
       obs.observe(el)
       observers.push(obs)
     })
-    return () => observers.forEach(o => o.disconnect())
-  }, [])
+    return () => observers.forEach((o) => o.disconnect())
+  }, [onHome])
 
-  const scrollTo = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const goToSection = (id) => {
     setMenuOpen(false)
+    if (onHome) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate(`/#${id}`)
+    }
+  }
+
+  const goHome = () => {
+    setMenuOpen(false)
+    if (onHome) window.scrollTo({ top: 0, behavior: 'smooth' })
+    else navigate('/')
   }
 
   return (
-    <nav style={{ backgroundColor: '#0d0d0d', borderBottom: '1px solid #1e1e1e' }}
-      className="fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-elevated border-b border-surface">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="text-white font-bold text-lg tracking-tight"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'white' }}>
-          Aqeel <span style={{ color: 'var(--accent)' }}>Ryan</span>
+        <button onClick={goHome} className="text-white font-bold text-lg tracking-tight cursor-pointer">
+          Aqeel <span className="text-accent">Ryan</span>
         </button>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex gap-8">
-          {links.map(({ label, id }) => (
-            <button key={id} onClick={() => scrollTo(id)}
-              className={`nav-link${active === id ? ' active' : ''}`}
-              style={{ background: 'none', border: 'none' }}>
+        <div className="hidden md:flex items-center gap-8">
+          {sections.map(({ label, id }) => (
+            <button key={id} onClick={() => goToSection(id)}
+              className={`nav-link${onHome && active === id ? ' active' : ''}`}>
               {label}
             </button>
           ))}
+          <Link to="/blog" className={`nav-link${pathname.startsWith('/blog') ? ' active' : ''}`}>
+            Blog
+          </Link>
+          <a href={profile.resumeUrl} target="_blank" rel="noreferrer"
+            className="text-sm font-bold text-accent border border-accent rounded-md px-3 py-1.5 transition-colors duration-200 hover:bg-accent/10">
+            Resume
+          </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button className="md:hidden"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#aaa' }}
-          onClick={() => setMenuOpen(o => !o)}>
+        <button className="md:hidden text-2xl text-[#aaa] cursor-pointer leading-none"
+          aria-label="Toggle menu" onClick={() => setMenuOpen((o) => !o)}>
           {menuOpen ? '✕' : '☰'}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div style={{ backgroundColor: '#0d0d0d', borderTop: '1px solid #1e1e1e' }}
-          className="md:hidden px-6 pb-4 flex flex-col gap-4">
-          {links.map(({ label, id }) => (
-            <button key={id} onClick={() => scrollTo(id)}
-              className={`nav-link${active === id ? ' active' : ''}`}
-              style={{ background: 'none', border: 'none', textAlign: 'left' }}>
+        <div className="md:hidden px-6 pb-4 flex flex-col gap-4 bg-elevated border-t border-surface">
+          {sections.map(({ label, id }) => (
+            <button key={id} onClick={() => goToSection(id)}
+              className={`nav-link text-left${onHome && active === id ? ' active' : ''}`}>
               {label}
             </button>
           ))}
+          <Link to="/blog" onClick={() => setMenuOpen(false)} className="nav-link text-left">Blog</Link>
+          <a href={profile.resumeUrl} target="_blank" rel="noreferrer" className="nav-link text-left">
+            Resume ↓
+          </a>
         </div>
       )}
     </nav>
