@@ -1,9 +1,16 @@
 const projects = [
   {
-    title: 'AI-Readiness Signal Pipeline',
+    title: 'Marketplace Intelligence Platform — Agentic ETL Lakehouse',
     period: 'Jan 2026 – Present',
-    description: 'Co-architecting a multi-pipeline platform that evaluates target companies on AI-readiness using a mathematical scoring formula across SEC filings, job postings, patent activity, technology stack, and company culture signals. Owned full design and implementation of the external signals pipeline.',
-    tech: ['Python', 'Snowflake', 'AWS S3', 'Redis', 'FastAPI', 'pytest'],
+    description: 'Designed a 3-agent LangGraph StateGraph that analyzes heterogeneous data source schemas and emits declarative YAML transforms, enabling zero-code extensibility. A Redis YAML cache (30-day TTL) short-circuits agent replay. Extended to entire new verticals through domain packs — directories of declarative artifacts loaded at startup with zero Python branching per domain.',
+    tech: ['Python', 'LangGraph', 'LiteLLM', 'Airflow', 'Kafka', 'BigQuery', 'GCS', 'ChromaDB', 'FAISS', 'Redis', 'Streamlit', 'Prometheus', 'Grafana'],
+    github: 'https://github.com/Aqeel-Ryan',
+  },
+  {
+    title: 'PE Due Diligence Platform — Multi-Agent Agentic Intelligence',
+    period: 'Jan 2026 – Present',
+    description: 'Built a LangGraph StateGraph with supervisor router dispatching work to four specialist agents (SEC Analyst, Scorer, Evidence Analyst, Value Creator), each accessing platform data exclusively through an MCP tool server. Implemented HITL interrupt gates using LangGraph\'s interrupt() + Command(resume=decision) pattern to keep humans in control of high-stakes investment decisions.',
+    tech: ['Python', 'LangGraph', 'MCP', 'Snowflake', 'AWS S3', 'ChromaDB', 'SEC EDGAR', 'PatentsView', 'Redis', 'LiteLLM', 'Streamlit', 'Prometheus', 'Mem0'],
     github: 'https://github.com/Aqeel-Ryan',
   },
   {
