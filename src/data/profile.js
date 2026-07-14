@@ -17,7 +17,7 @@ export const profile = {
       'infrastructure (Azure, AWS, GCP), and the full AI application stack.',
   ],
 
-  email: 'ryan.aq@northeastern.edu',
+  email: 'aqeelryan@gmail.com',
   linkedin: 'https://linkedin.com/in/aqryn',
   github: 'https://github.com/Aqeel-Ryan',
   resumeUrl: '/resume.pdf',
@@ -30,6 +30,7 @@ export const profile = {
 
   coreSkills: [
     'RAG Systems', 'Multi-Agent / LangGraph', 'LLM Engineering', 'Azure AI Foundry',
-    'AWS', 'Snowflake', 'FastAPI', 'Python', 'Hybrid Search',
+    'AWS Bedrock', 'Snowflake', 'FastAPI', 'Python', 'Hybrid Search',
+    'LiteLLM', 'MCP Servers', 'LangChain', 'BigQuery',
   ],
 }
